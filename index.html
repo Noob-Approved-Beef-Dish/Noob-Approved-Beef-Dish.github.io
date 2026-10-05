@@ -35,6 +35,7 @@ body::after{
 .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
 .r{background:#ff5f57}.y{background:#febc2e}.g{background:#28c840}
 .bar span.title{margin-left:8px}
+.bar .agent{color:var(--fg)}
 .body{padding:26px 26px 30px}
 h1{font-size:19px;margin:0 0 4px;color:var(--fg);font-weight:600}
 .sub{color:var(--dim);margin:0 0 22px;font-size:13.5px}
@@ -63,7 +64,7 @@ footer{margin-top:26px;color:var(--dim);font-size:12.5px}
 </head>
 <body>
 <main class="win">
-  <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="title">C:\&gt; whoami</span></div>
+  <div class="bar"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span class="title">C:\&gt; <span class="agent" id="agent">whoami</span></span></div>
   <div class="body">
 
     <div class="head">
@@ -111,5 +112,26 @@ footer{margin-top:26px;color:var(--dim);font-size:12.5px}
     <footer>© 2026 牛肉饼 · 单文件手搓 · MIT</footer>
   </div>
 </main>
+
+<script>
+/* 在线探测浏览器，把命令栏的 whoami 换成浏览器名；识别失败 / JS 被禁则保留 whoami */
+(function () {
+  var u = navigator.userAgent;
+  function major(re) { var m = u.match(re); return m ? m[1].split(".")[0] : ""; }
+  var n = "";
+  if (/Edg\//.test(u))                        n = "Edge";
+  else if (/OPR\/|Opera/.test(u))              n = "Opera";
+  else if (/SamsungBrowser/.test(u))           n = "Samsung Internet";
+  else if (/Firefox\//.test(u))                n = "Firefox";
+  else if (/Chrome\//.test(u))                 n = "Chrome";
+  else if (/Version\/[\d.]+\s+Safari/.test(u)) n = "Safari";
+  else if (/MSIE|Trident/.test(u))             n = "Internet Explorer";
+  var el = document.getElementById("agent");
+  if (!el || !n) return;
+  var v = major(/(?:Edg|OPR|Opera|SamsungBrowser|Firefox|Chrome|Version)\/([\d.]+)/);
+  el.textContent = v ? n + " " + v : n;
+  el.title = navigator.userAgent;
+})();
+</script>
 </body>
 </html>
