@@ -6,6 +6,8 @@
 
 直接双击 `index.html` 就能看，不用装任何东西。
 
+文件就三个：`index.html`（全部内容）、`avatar.jpg`（头像，也当网站图标）、`.nojekyll`（别删）。
+
 想用本地服务器预览（更像线上环境）：
 
     python -m http.server 8000
